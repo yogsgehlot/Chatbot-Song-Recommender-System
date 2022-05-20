@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+
+        <link rel =  "stylesheet" type="text/css" href="/static/styles.css">
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+
+
+
+    </head>
+    <body>
+
+        <div>
+
+            <div id ="chatbox">
+                <p class = "botText"><span>Hi! I'm Chatterbot.</span></p>
+            </div>
+            <div id = "userInput">
+                <input id = "textInput" type = "text" name = "text" placeholder = "Message">
+                <input id = "buttonInput" type = "submit" value = "Send">
+                <form action="/forward/" method="post"><button id="getson" name="forwardBtn" type="submit">Get song</button></form>
+
+            </div>
+            <script>
+                function getBotResponse(){
+                    var rawText = $("#textInput").val();
+                    var userHtml = '<p class = "userText"><span>' + rawText + '</span></p>';
+                    $("#textInput").val("");
+                    $("#chatbox").append(userHtml);
+                    document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+                    $.get("/get", { msg: rawText }).done(function(data) {
+                        var botHtml = '<p class = "botText"><span>' + data + '</span></p>';
+                        $("#chatbox").append(botHtml);
+                        document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+                    });
+                }
+                $("#textInput").keypress(function(e){
+                    if(e.which == 13){
+                        getBotResponse();
+                    }
+                });
+                $("#buttonInput").click(function(){
+                    getBotResponse();
+                })
+            </script>
+        </div>
+
+    </body>
+</html>

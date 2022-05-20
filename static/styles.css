@@ -1,0 +1,119 @@
+body {
+background-image: url(headphone.jpeg); /* The image used */
+  background-color: #cccccc; /* Used if the image is unavailable */
+  height: 500px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+    font-family: 'Indie Flower', cursive;
+}
+
+h1 {
+    color: black;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: center;
+    font-size: 40px;
+}
+
+h3 {
+    color: black;
+    font-size: 20px;
+    margin-top: 3px;
+    text-align: center;
+}
+
+#chatbox {
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    margin-top: 60px;
+}
+
+#userInput {
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    margin-top: 60px;
+}
+
+#textInput {
+    width: 87%;
+    border: none;
+    border-radius: 5px;
+    border-bottom: 3px solid #009688;
+    font-family: 'Indie Flower', cursive;
+    font-size: 17px;
+    padding: 2px;
+    background-color:rgb(48 45 45);
+    color:white;
+
+
+}
+
+#getson {
+    margin:15px;
+    border-radius: 18px;
+    font-size: 17px;
+}
+#getson{
+transition-duration:0.5s;
+}
+#getson:hover{
+background-color:rgb(9, 162, 244);
+color:black;
+}
+#buttonInput {
+    padding: 3px;
+    font-family: 'Indie Flower', cursive;
+    border-radius: 10px;
+    font-size: 16px;
+}
+#buttonInput{
+transition-duration:0.5s;
+}
+#buttonInput:hover{
+background-color:rgb(9, 162, 244);
+color:black;
+}
+
+#userText {
+    color: white;
+    font-family: 'Indie Flower', cursive;
+    font-size: 17px;
+    text-align: right;
+    line-height: 30px;
+    display:block;
+}
+
+.userText span {
+    background-color: #009688;
+    padding: 10px;
+    border-radius: 2px;
+    margin-left:355px;
+    display:block;
+    border-radius:15px;
+}
+
+.botText {
+    color: white;
+    font-family: 'Indie Flower', cursive;
+    font-size: 17px;
+    text-align: left;
+    line-height: 30px;
+}
+
+.botText span {
+    background-color: #EF5350;
+    padding: 10px;
+    border-radius: 15px;
+
+
+}
+
+#tidbit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+}
