@@ -1,8 +1,12 @@
-This is Chatbot-Song-Recommender-System developed by Yogesh Gehlot (https://github.com/yogsgehlot), Ayush Suryawanshi (https://github.com/AyushSuryawanshi004), Amarpreet Singh (https://github.com/Amarpreet-singh07) and Snehdeep Mehta (https://github.com/Snehdeep31).
+This is Chatbot-Song-Recommender-System developed by-
+1. **Yogesh Gehlot** (https://github.com/yogsgehlot) 
+2. **Ayush Suryawanshi** (https://github.com/AyushSuryawanshi004) 
+3. **Amarpreet Singh** (https://github.com/Amarpreet-singh07)  
+4. **Snehdeep Mehta** (https://github.com/Snehdeep31)
 
 -----------------------------------------------------------------
 
-Steps of Run this project in your system:
+**Steps of Run this project in your system:**
 
 
 1. Download PyCharm from- https://www.jetbrains.com/pycharm/download/#section=windows
