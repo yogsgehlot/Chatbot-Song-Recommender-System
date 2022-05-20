@@ -8,10 +8,10 @@ Steps of Run this project in your system:
 1. Download PyCharm from- https://www.jetbrains.com/pycharm/download/#section=windows
 2. Download this project and open it in PyCharm.
 3. Open terminal of PyCharm and install below libraries.
-    i. pip install flask
-    ii. pip install chatterbot
-    iii. pip install textblob
-    iv. pip install ntlk
+    i. pip install flask  
+    ii. pip install chatterbot  
+    iii. pip install textblob  
+    iv. pip install ntlk  
 4.  Run this project.
 5. You may face these type problems during run project:-
 
@@ -49,4 +49,16 @@ Change the statement -  "if not isinstance(key, collections.Hashable):" to "if n
 
 
 Run it again.
+click below last link :
+
+
+![7](https://user-images.githubusercontent.com/75558691/169479964-9a39a8b1-7371-4050-ad07-097e65303f9d.png)
+
+
+After click this link you wil get a web page in browser.-
+
+![Screenshot (573)](https://user-images.githubusercontent.com/75558691/169480095-cf9e46a5-5275-4194-be23-31ccacf162c9.png)
+
+
 Now your project is ready.
+Thank You !
