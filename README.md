@@ -16,7 +16,7 @@ This is Chatbot-Song-Recommender-System developed by-
     ii. pip install chatterbot  
     iii. pip install textblob  
     iv. pip install ntlk  
-4.  Run this project.
+4. Open app.py Run this project.
 5. You may face these type problems during run project:-
 
     problem 1) -  AttributeError : module 'time' has no attribute 'clock'
