@@ -1,11 +1,3 @@
-This is Chatbot-Song-Recommender-System developed by-
-1. **Yogesh Gehlot** (https://github.com/yogsgehlot) 
-2. **Ayush Suryawanshi** (https://github.com/AyushSuryawanshi004) 
-3. **Amarpreet Singh** (https://github.com/Amarpreet-singh07)  
-4. **Snehdeep Mehta** (https://github.com/Snehdeep31)
-
------------------------------------------------------------------
-
 **Steps of Run this project in your system:**
 
 
@@ -15,7 +7,7 @@ This is Chatbot-Song-Recommender-System developed by-
     i. pip install flask  
     ii. pip install chatterbot  
     iii. pip install textblob  
-    iv. pip install ntlk  
+    iv. pip install nltk  
 4. Open app.py Run this project.
 5. You may face these type problems during run project:-
 
