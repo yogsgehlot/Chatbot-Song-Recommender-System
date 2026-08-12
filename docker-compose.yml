@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: music-recommender-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - music-data:/app/data
+    env_file:
+      - ./backend/.env
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./data/music_recommender.db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # Uncomment to add PostgreSQL for production
+  # db:
+  #   image: postgres:16-alpine
+  #   container_name: music-recommender-db
+  #   environment:
+  #     POSTGRES_DB: music_recommender
+  #     POSTGRES_USER: musicapp
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U musicapp"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+volumes:
+  music-data:
+  # postgres-data:

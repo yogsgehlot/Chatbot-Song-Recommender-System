@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MusicMind — Your AI-powered music companion. Get personalized song recommendations based on your mood, genre, and taste." />
+  <meta name="keywords" content="music, AI, recommendations, songs, playlist, mood-based music" />
+  <meta name="author" content="MusicMind" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta property="og:title" content="MusicMind — AI Music Assistant" />
+  <meta property="og:description" content="Discover music that matches your mood with AI-powered recommendations." />
+  <meta property="og:type" content="website" />
+  <title>MusicMind — AI Music Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./static/css/styles.css" />
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/>
+            <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <span class="logo-text">MusicMind</span>
+      </div>
+      <span class="topbar-subtitle">AI Music Assistant</span>
+    </div>
+    <div class="topbar-right">
+      <div class="status-indicator" id="statusIndicator">
+        <div class="status-dot" id="statusDot"></div>
+        <span class="status-label" id="statusLabel">Connecting…</span>
+      </div>
+      <div class="provider-badge" id="providerBadge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="providerName">LLM</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="main-layout">
+
+    <!-- LEFT PANEL: CHAT -->
+    <section class="chat-panel" aria-label="Chat interface">
+
+      <!-- Mood Quick-Select Chips -->
+      <div class="mood-chips-container">
+        <p class="mood-chips-label">Quick mood</p>
+        <div class="mood-chips">
+          <button class="mood-chip calm"      data-mood="calm"      data-message="Give me calm and soothing songs to relax">
+            <span class="mood-chip-icon">🌊</span> Calm
+          </button>
+          <button class="mood-chip happy"     data-mood="happy"     data-message="Recommend me some upbeat happy songs to lift my spirits">
+            <span class="mood-chip-icon">☀️</span> Happy
+          </button>
+          <button class="mood-chip sad"       data-mood="sad"       data-message="I'm feeling sad, recommend some emotional and melancholic songs">
+            <span class="mood-chip-icon">🌧</span> Sad
+          </button>
+          <button class="mood-chip energetic" data-mood="energetic" data-message="Give me high-energy, pump-up songs to get me going">
+            <span class="mood-chip-icon">⚡</span> Energetic
+          </button>
+          <button class="mood-chip romantic"  data-mood="romantic"  data-message="Suggest romantic and love songs for a special evening">
+            <span class="mood-chip-icon">💜</span> Romantic
+          </button>
+          <button class="mood-chip workout"   data-mood="workout"   data-message="I need intense workout music for the gym session">
+            <span class="mood-chip-icon">🔥</span> Workout
+          </button>
+          <button class="mood-chip study"     data-mood="study"     data-message="Give me calm study music to help me focus and concentrate">
+            <span class="mood-chip-icon">📚</span> Study
+          </button>
+          <button class="mood-chip party"     data-mood="party"     data-message="Recommend party songs for a night out with friends">
+            <span class="mood-chip-icon">🎉</span> Party
+          </button>
+        </div>
+      </div>
+
+      <!-- Message History -->
+      <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-label="Conversation history">
+
+        <!-- Welcome Bot Message -->
+        <div class="message-row bot">
+          <div class="message-avatar" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/>
+              <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="message-bubble bot-bubble">
+            <p>Hey there! 👋 I'm <strong>MusicMind</strong>, your AI music companion.</p>
+            <p>Tell me what you're feeling — a mood, a genre, an artist you love, or even a vibe like <em>"something for a rainy afternoon"</em> — and I'll find the perfect tracks for you.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Typing Indicator (hidden by default) -->
+      <div class="typing-indicator" id="typingIndicator" aria-hidden="true" style="display:none;">
+        <div class="message-avatar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/>
+            <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chat-input-area">
+        <div class="chat-input-wrapper">
+          <textarea
+            id="chatInput"
+            class="chat-input"
+            placeholder="Ask for a vibe, artist, genre, mood…"
+            rows="1"
+            aria-label="Type your message"
+            autocomplete="off"
+            spellcheck="true"
+          ></textarea>
+          <button class="send-button" id="sendButton" aria-label="Send message" title="Send (Enter)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <line x1="22" y1="2" x2="11" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <p class="input-hint">Press <kbd>Enter</kbd> to send &middot; <kbd>Shift+Enter</kbd> for new line</p>
+      </div>
+
+    </section>
+
+    <!-- RIGHT PANEL: RECOMMENDATIONS -->
+    <section class="recommendations-panel" aria-label="Song recommendations">
+
+      <div class="recommendations-header">
+        <div class="recommendations-title-group">
+          <h2 class="recommendations-title">Recommendations</h2>
+          <span class="recommendations-count" id="recommendationsCount" style="display:none;"></span>
+        </div>
+        <button class="clear-btn" id="clearRecsBtn" style="display:none;" aria-label="Clear recommendations">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Clear
+        </button>
+      </div>
+
+      <!-- Filters Bar (UX Feature Extension) -->
+      <div class="filters-bar" id="filtersBar">
+        <div class="filter-group">
+          <label for="filterCountry" class="filter-label">Region</label>
+          <select id="filterCountry" class="filter-select">
+            <option value="all">All Regions</option>
+            <option value="india">India</option>
+            <option value="international">International</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterLanguage" class="filter-label">Language</label>
+          <select id="filterLanguage" class="filter-select">
+            <option value="all">All Languages</option>
+            <option value="english">English</option>
+            <option value="hindi">Hindi</option>
+            <option value="punjabi">Punjabi</option>
+            <option value="spanish">Spanish</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterGenre" class="filter-label">Genre</label>
+          <select id="filterGenre" class="filter-select">
+            <option value="all">All Genres</option>
+            <option value="hip-hop">Hip Hop</option>
+            <option value="pop">Pop</option>
+            <option value="lo-fi">Lo-Fi</option>
+            <option value="bollywood">Bollywood</option>
+            <option value="jazz">Jazz</option>
+            <option value="electronic">Electronic</option>
+          </select>
+        </div>
+        <button class="filter-reset-btn" id="filterResetBtn" title="Reset Filters">
+          Reset
+        </button>
+      </div>
+
+      <!-- Taste Profile Dashboard (UX Feature) -->
+      <div class="taste-profile-dashboard" id="tasteProfileDashboard" style="display: none;">
+        <div class="dashboard-title">Acoustic Taste Analysis</div>
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <div class="metric-info">
+              <span class="metric-name">Energy</span>
+              <span class="metric-val" id="metricEnergyVal">0%</span>
+            </div>
+            <div class="metric-bar-wrapper">
+              <div class="metric-bar" id="metricEnergyBar" style="width: 0%;"></div>
+            </div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-info">
+              <span class="metric-name">Valence (Happiness)</span>
+              <span class="metric-val" id="metricValenceVal">0%</span>
+            </div>
+            <div class="metric-bar-wrapper">
+              <div class="metric-bar" id="metricValenceBar" style="width: 0%;"></div>
+            </div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-info">
+              <span class="metric-name">Danceability</span>
+              <span class="metric-val" id="metricDanceabilityVal">0%</span>
+            </div>
+            <div class="metric-bar-wrapper">
+              <div class="metric-bar" id="metricDanceabilityBar" style="width: 0%;"></div>
+            </div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-info">
+              <span class="metric-name">Acousticness</span>
+              <span class="metric-val" id="metricAcousticnessVal">0%</span>
+            </div>
+            <div class="metric-bar-wrapper">
+              <div class="metric-bar" id="metricAcousticnessBar" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-state-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3 class="empty-state-title">Tell MusicMind what you're in the mood for…</h3>
+        <p class="empty-state-desc">Describe a feeling, a genre, an artist, or even a moment. Your personalized soundtrack awaits.</p>
+        <div class="empty-state-examples">
+          <span class="example-pill">"Songs like Blinding Lights"</span>
+          <span class="example-pill">"Chill lofi hip-hop for studying"</span>
+          <span class="example-pill">"90s Bollywood classics"</span>
+          <span class="example-pill">"Upbeat songs for running"</span>
+        </div>
+      </div>
+
+      <!-- Song Cards Grid -->
+      <div class="song-cards-grid" id="songCardsGrid" style="display:none;"></div>
+
+    </section>
+
+  </main>
+
+  <script src="./static/js/app.js"></script>
+</body>
+</html>

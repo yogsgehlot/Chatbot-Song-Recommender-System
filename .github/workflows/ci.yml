@@ -1,0 +1,41 @@
+name: MusicMind CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e backend/.[dev]
+
+    - name: Generate sample dataset
+      run: |
+        python backend/scripts/generate_sample_data.py
+
+    - name: Run test suite
+      run: |
+        pytest backend/tests/ -v --cov=backend/app --cov-report=term-missing
+
+    - name: Run offline engine evaluation
+      run: |
+        python backend/scripts/evaluate_engine.py
