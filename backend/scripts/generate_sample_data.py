@@ -174,8 +174,8 @@ CATALOG: list[dict] = [
 ]
 
 
-def generate_additional_songs(count: int = 100) -> list[dict]:
-    """Generate additional synthetic songs to fill the dataset."""
+def generate_additional_songs(count: int = 1000) -> list[dict]:
+    """Generate additional synthetic songs to fill the dataset with realistic Hindi, Punjabi, and English popular music."""
     genres = ["pop", "rock", "indie", "hip-hop", "r&b", "jazz", "classical", "lo-fi", "bollywood", "punjabi"]
     languages = ["english", "hindi", "punjabi", "spanish", "french", "instrumental"]
     mood_combos = [
@@ -183,29 +183,54 @@ def generate_additional_songs(count: int = 100) -> list[dict]:
         "romantic,love,ballad", "energetic,workout,motivational", "chill,relaxing,ambient",
         "party,dance,upbeat", "nostalgic,classic,indie",
     ]
-    artists = [
-        "The Resonance", "Echo Valley", "Midnight Souls", "Aurora Beats",
-        "Crystal Waves", "Neon Dreams", "Velvet Underground Cover", "Deep Space",
-        "Urban Flow", "Mountain Echo", "City Lights", "Forest Rain",
-    ]
+    
+    artists_english = ["Taylor Swift", "Ed Sheeran", "The Weeknd", "Drake", "Eminem", "Billie Eilish", "Dua Lipa", "Justin Bieber", "Post Malone", "Bruno Mars", "Coldplay", "Adele"]
+    artists_hindi = ["Arijit Singh", "Neha Kakkar", "Atif Aslam", "Pritam", "A.R. Rahman", "Badshah", "Shreya Ghoshal", "Jubin Nautiyal", "Kishore Kumar", "Lata Mangeshkar"]
+    artists_punjabi = ["Sidhu Moose Wala", "Diljit Dosanjh", "Karan Aujla", "AP Dhillon", "Shubh", "Guru Randhawa", "Hardy Sandhu", "Jassi Gill", "Amrit Maan"]
+    artists_generic = ["Midnight Souls", "Echo Valley", "Neon Dreams", "Crystal Waves", "Aurora Beats", "City Lights"]
+
+    english_titles = ["Summer Love", "Midnight Run", "Dancing in the Rain", "Neon Lights", "City Dreams", "Lost in You", "Golden Hours", "Heartbeat", "Whispers in the Dark", "Forever Young", "Ocean Waves", "Skyline", "Electric Love", "Stay With Me", "Faded Memories", "Running Free", "Without You", "Perfect Day", "Night Vibes", "Into the Light"]
+    hindi_titles = ["Tum Mile", "Dil Ka Rishta", "Sajda", "Pehli Nazar", "Mere Humsafar", "Zindagi", "Khamoshiyan", "Kabira", "Zaalima", "Chahat", "Dard-e-Dil", "Baatein", "Safar", "Dastaan", "Roshni", "Mast Qalandar", "Naina", "Musafir", "Falak", "Pyaar Ki Dastaan"]
+    punjabi_titles = ["Brown Munde", "Yaar Anmulle", "Desi Beat", "High Life", "Gabru", "Mitran Da Naa", "Bhangra Groove", "Jatt Life", "Patiala Peg", "Majhail", "Sardari", "Punjab", "Gedi Route", "Vibe", "Legend", "We Rollin", "Excuses", "No Love", "Bira", "Putt Jatt Da"]
 
     songs = []
     for i in range(count):
-        genre = random.choice(genres)
-        lang = random.choice(languages) if genre != "classical" else "instrumental"
+        # Determine language first
+        lang = random.choice(languages)
+        
+        # Select appropriate artist & title based on language
+        if lang == "hindi":
+            artist = random.choice(artists_hindi)
+            title = f"{random.choice(hindi_titles)} ({random.randint(1, 99)})"
+            genre = random.choice(["bollywood", "pop", "indie"])
+        elif lang == "punjabi":
+            artist = random.choice(artists_punjabi)
+            title = f"{random.choice(punjabi_titles)} ({random.randint(1, 99)})"
+            genre = random.choice(["punjabi", "pop", "hip-hop"])
+        elif lang == "english":
+            artist = random.choice(artists_english)
+            title = f"{random.choice(english_titles)} ({random.randint(1, 99)})"
+            genre = random.choice(["pop", "rock", "hip-hop", "indie", "r&b"])
+        else:
+            artist = random.choice(artists_generic)
+            title = f"Vibe Track {i + 1:03d}"
+            genre = random.choice(genres)
+            if genre == "classical":
+                lang = "instrumental"
+
         energy = round(random.uniform(0.1, 0.95), 2)
         songs.append({
-            "title": f"Track {i + 1:03d}",
-            "artist": random.choice(artists),
+            "title": title,
+            "artist": artist,
             "genre": genre,
             "language": lang,
-            "year": random.randint(1995, 2024),
+            "year": random.randint(1995, 2026),
             "energy": energy,
             "valence": round(random.uniform(0.1, 0.95), 2),
             "tempo": round(random.uniform(60, 180), 1),
             "danceability": round(random.uniform(0.15, 0.95), 2),
             "acousticness": round(random.uniform(0.02, 0.95), 2),
-            "popularity": random.randint(40, 85),
+            "popularity": random.randint(50, 99),
             "mood_tags": random.choice(mood_combos),
         })
     return songs
@@ -215,7 +240,7 @@ def main() -> None:
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     all_songs = list(CATALOG)
-    all_songs.extend(generate_additional_songs(100))
+    all_songs.extend(generate_additional_songs(1000))
 
     # Assign UUIDs
     fieldnames = [
